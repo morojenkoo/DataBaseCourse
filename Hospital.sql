@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS Anamnesis (
 	FOREIGN KEY (Attending_doctor_ID) REFERENCES Doctor(Employee_ID),
 	FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID)
 );
-TRUNCATE Department, Employee, Doctor, Nurse, Sanitar, Ward, Work_Schedule, Anamnesis, Patient RESTART IDENTITY CASCADE;
+
 /*
 TRUNCATE Department, Employee, Doctor, Nurse, Sanitar, Ward, Work_Schedule, Anamnesis, Patient RESTART IDENTITY CASCADE;
 
