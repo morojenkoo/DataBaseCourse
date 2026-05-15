@@ -1,3 +1,4 @@
+using HospitalApp.Forms;
 namespace HospitalApp;
 
 static class Program

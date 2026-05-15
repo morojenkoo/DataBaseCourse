@@ -19,3 +19,6 @@ D:\games\DataBaseCourse\HospitalApp\HospitalApp\obj\Debug\net8.0-windows\refint\
 D:\games\DataBaseCourse\HospitalApp\HospitalApp\obj\Debug\net8.0-windows\HospitalApp.pdb
 D:\games\DataBaseCourse\HospitalApp\HospitalApp\obj\Debug\net8.0-windows\HospitalApp.genruntimeconfig.cache
 D:\games\DataBaseCourse\HospitalApp\HospitalApp\obj\Debug\net8.0-windows\ref\HospitalApp.dll
+D:\games\DataBaseCourse\HospitalApp\HospitalApp\obj\Debug\net8.0-windows\HospitalApp.Forms.PatientForm.resources
+D:\games\DataBaseCourse\HospitalApp\HospitalApp\obj\Debug\net8.0-windows\HospitalApp.csproj.GenerateResource.cache
+D:\games\DataBaseCourse\HospitalApp\HospitalApp\bin\Debug\net8.0-windows\Newtonsoft.Json.dll

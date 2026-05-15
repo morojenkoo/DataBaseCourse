@@ -9,7 +9,29 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
       <PackageReference Include="Npgsql" Version="10.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Forms\Form1.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Forms\EmployeeForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Forms\DepartmentForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Forms\WardForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Forms\PatientForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Forms\AnamnesisForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

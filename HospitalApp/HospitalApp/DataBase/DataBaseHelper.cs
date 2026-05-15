@@ -1,6 +1,6 @@
 ﻿using Npgsql;
 
-namespace HospitalApp.Database
+namespace HospitalApp.DataBase
 {
     public class DataBaseHelper
     {
@@ -8,22 +8,6 @@ namespace HospitalApp.Database
         public NpgsqlConnection GetConnection()
         {
             return new NpgsqlConnection(ConnectionString);
-        }
-        public bool TestConnection()
-        {
-            try
-            {
-                using (var conn = GetConnection())
-                {
-                    conn.Open();
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ошибка подключения: " + ex.Message);
-                return false;
-            }
         }
     }
 }

@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS Ward (
 	Ward_ID SERIAL PRIMARY KEY,
 	Bed_count INT NOT NULL,
 	VIP_status BIT NOT NULL, -- 1 VIP, 0 нет
-	Isolation_status INT NOT NULL, -- по уровню изоляции от 0 (не изоляции) до N (максимальная изоляция)
+	Isolation_status VARCHAR(50) NOT NULL,
 	Ward_number INT NOT NULL,
 	Department_ID INT NOT NULL,
 	FOREIGN KEY (Department_ID) REFERENCES Department (Department_ID),
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS Patient (
 	Name VARCHAR(50) NOT NULL,
 	Surname VARCHAR(50) NOT NULL,
 	Patronymic VARCHAR(50),
-	Gender BIT NOT NULL,
+	Gender BIT NOT NULL, -- 1 - мужчина, 0 - женщина
 	Date_of_birth DATE NOT NULL,
 	Polys_number VARCHAR(16) CHECK (Polys_number ~ '^\d{16}$'),
 	SNILS VARCHAR(14) UNIQUE CHECK (snils ~ '^\d{3}-\d{3}-\d{3}-\d{2}$'),
@@ -131,6 +131,7 @@ CREATE TABLE IF NOT EXISTS Patient (
 CREATE TABLE IF NOT EXISTS Anamnesis (
 	Anamnesis_ID SERIAL PRIMARY KEY,
 	Date_of_arrive DATE NOT NULL,
+	Date_of_discharge DATE NULL,
 	Medical_history TEXT NOT NULL,
 	Complaints TEXT NOT NULL,
 	Allergies JSONB NOT NULL,
