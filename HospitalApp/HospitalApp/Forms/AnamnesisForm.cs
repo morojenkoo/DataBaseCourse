@@ -31,7 +31,7 @@ namespace HospitalApp.Forms
             
             LoadAllergiesList();
             LoadBadHabitsList();
-            LoadWards();
+            //LoadWards();
             LoadDoctors();
             LoadAnamnesis();
         }
@@ -134,7 +134,7 @@ namespace HospitalApp.Forms
                 clb.SetItemChecked(i, items.Contains(itemText));
             }
         }
-
+/*
         private void LoadWards()
         {
             try
@@ -157,7 +157,7 @@ namespace HospitalApp.Forms
                 MessageBox.Show("Ошибка загрузки палат: " + ex.Message);
             }
         }
-
+*/
         private void LoadDoctors()
         {
             try
@@ -184,7 +184,7 @@ namespace HospitalApp.Forms
                 MessageBox.Show("Ошибка загрузки врачей: " + ex.Message);
             }
         }
-
+/*
         // Поиск палаты
         private void btnWardSearch_Click(object sender, EventArgs e)
         {
@@ -233,7 +233,7 @@ namespace HospitalApp.Forms
             lblSelectedWard.Text = $"Выбрано: палата {selected.Number}";
             lstWardResults.Visible = false;
         }
-
+*/
         // Поиск принимающего врача
         private void btnAdmittingDoctorSearch_Click(object sender, EventArgs e)
         {
@@ -376,7 +376,7 @@ namespace HospitalApp.Forms
                             dgvAnamnesis.DataSource = dt;
 
                             if (dgvAnamnesis.Columns["Anamnesis_ID"] != null)
-                                dgvAnamnesis.Columns["Anamnesis_ID"].Visible = false;
+                                dgvAnamnesis.Columns["Anamnesis_ID"].HeaderText = "Номер истории болезни";
                             if (dgvAnamnesis.Columns["Ward_ID"] != null)
                                 dgvAnamnesis.Columns["Ward_ID"].Visible = false;
                             if (dgvAnamnesis.Columns["Admitting_doctor_ID"] != null)
@@ -425,6 +425,8 @@ namespace HospitalApp.Forms
             if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvAnamnesis.Rows[e.RowIndex];
+            if (row.Cells["Anamnesis_ID"].Value == null || row.Cells["Anamnesis_ID"].Value == DBNull.Value)
+                return;
             currentAnamnesisId = Convert.ToInt32(row.Cells["Anamnesis_ID"].Value);
 
             object dateArriveObj = row.Cells["Date_of_arrive"].Value;
@@ -500,22 +502,15 @@ namespace HospitalApp.Forms
                 SetSelectedItemsFromJson(clbBadHabits, badHabitsJson);
             }
 
-            selectedWardId = Convert.ToInt32(row.Cells["Ward_ID"].Value);
             selectedAdmittingDoctorId = Convert.ToInt32(row.Cells["Admitting_doctor_ID"].Value);
             selectedAttendingDoctorId = Convert.ToInt32(row.Cells["Attending_doctor_ID"].Value);
 
-            lblSelectedWard.Text = $"Выбрано: палата {selectedWardId}";
             lblSelectedAdmittingDoctor.Text = $"Выбрано: врач ID {selectedAdmittingDoctorId}";
             lblSelectedAttendingDoctor.Text = $"Выбрано: врач ID {selectedAttendingDoctorId}";
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (selectedWardId == 0)
-            {
-                MessageBox.Show("Выберите палату");
-                return;
-            }
             if (selectedAdmittingDoctorId == 0)
             {
                 MessageBox.Show("Выберите принимающего врача");
@@ -542,7 +537,7 @@ namespace HospitalApp.Forms
                             Blood_pressure_low, Blood_pressure_high, Pulse, Saturation,
                             Skin, Mucosal, Thermometry
                         ) VALUES (
-                            @patientId, @wardId, @admittingDoctor, @attendingDoctor,
+                            @patientId, NULL, @admittingDoctor, @attendingDoctor,
                             @date, @dateOfDischarge, @complaints, @medicalHistory, @allergies::jsonb, @badHabits::jsonb,
                             @bpLow, @bpHigh, @pulse, @saturation,
                             @skin, @mucosal, @thermometry
@@ -551,7 +546,6 @@ namespace HospitalApp.Forms
                     using (var cmd = new NpgsqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@patientId", patientId);
-                        cmd.Parameters.AddWithValue("@wardId", selectedWardId);
                         cmd.Parameters.AddWithValue("@admittingDoctor", selectedAdmittingDoctorId);
                         cmd.Parameters.AddWithValue("@attendingDoctor", selectedAttendingDoctorId);
                         cmd.Parameters.AddWithValue("@date", dtpDateOfArrive.Value.Date);
@@ -600,7 +594,6 @@ namespace HospitalApp.Forms
                     conn.Open();
                     string query = @"
                         UPDATE Anamnesis SET
-                            Ward_ID = @wardId,
                             Admitting_doctor_ID = @admittingDoctor,
                             Attending_doctor_ID = @attendingDoctor,
                             Date_of_arrive = @date,
@@ -620,7 +613,6 @@ namespace HospitalApp.Forms
 
                     using (var cmd = new NpgsqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@wardId", selectedWardId);
                         cmd.Parameters.AddWithValue("@admittingDoctor", selectedAdmittingDoctorId);
                         cmd.Parameters.AddWithValue("@attendingDoctor", selectedAttendingDoctorId);
                         cmd.Parameters.AddWithValue("@date", dtpDateOfArrive.Value.Date);
@@ -716,7 +708,6 @@ namespace HospitalApp.Forms
             selectedAdmittingDoctorId = 0;
             selectedAttendingDoctorId = 0;
 
-            lblSelectedWard.Text = "Не выбрано";
             lblSelectedAdmittingDoctor.Text = "Не выбрано";
             lblSelectedAttendingDoctor.Text = "Не выбрано";
 

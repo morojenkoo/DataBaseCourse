@@ -71,7 +71,7 @@ partial class DepartmentForm
         dgvDepartments.Location = new System.Drawing.Point(12, 45);
         dgvDepartments.Name = "dgvDepartments";
         dgvDepartments.RowHeadersWidth = 51;
-        dgvDepartments.Size = new System.Drawing.Size(1896, 150);
+        dgvDepartments.Size = new System.Drawing.Size(564, 150);
         dgvDepartments.TabIndex = 2;
         dgvDepartments.CellClick += dgvDepartments_CellClick;
         // 

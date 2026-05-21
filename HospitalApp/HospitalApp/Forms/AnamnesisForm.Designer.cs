@@ -23,11 +23,6 @@ partial class AnamnesisForm
         dtpDateOfDischarge = new System.Windows.Forms.DateTimePicker();
         lblDateOfArrive = new System.Windows.Forms.Label();
         dtpDateOfArrive = new System.Windows.Forms.DateTimePicker();
-        lblWard = new System.Windows.Forms.Label();
-        txtWardSearch = new System.Windows.Forms.TextBox();
-        btnWardSearch = new System.Windows.Forms.Button();
-        lstWardResults = new System.Windows.Forms.ListBox();
-        lblSelectedWard = new System.Windows.Forms.Label();
         lblAdmittingDoctor = new System.Windows.Forms.Label();
         txtAdmittingDoctorSearch = new System.Windows.Forms.TextBox();
         btnAdmittingDoctorSearch = new System.Windows.Forms.Button();
@@ -95,7 +90,7 @@ partial class AnamnesisForm
         // dtpDateOfDischarge
         // 
         dtpDateOfDischarge.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-        dtpDateOfDischarge.Location = new System.Drawing.Point(150, 50);
+        dtpDateOfDischarge.Location = new System.Drawing.Point(176, 50);
         dtpDateOfDischarge.Name = "dtpDateOfDischarge";
         dtpDateOfDischarge.ShowCheckBox = true;
         dtpDateOfDischarge.Size = new System.Drawing.Size(200, 27);
@@ -105,70 +100,28 @@ partial class AnamnesisForm
         // 
         lblDateOfArrive.Location = new System.Drawing.Point(12, 85);
         lblDateOfArrive.Name = "lblDateOfArrive";
-        lblDateOfArrive.Size = new System.Drawing.Size(130, 27);
+        lblDateOfArrive.Size = new System.Drawing.Size(139, 27);
         lblDateOfArrive.TabIndex = 44;
         lblDateOfArrive.Text = "Дата поступления:";
         // 
         // dtpDateOfArrive
         // 
-        dtpDateOfArrive.Location = new System.Drawing.Point(150, 85);
+        dtpDateOfArrive.Location = new System.Drawing.Point(176, 85);
         dtpDateOfArrive.Name = "dtpDateOfArrive";
         dtpDateOfArrive.Size = new System.Drawing.Size(200, 27);
         dtpDateOfArrive.TabIndex = 43;
         // 
-        // lblWard
-        // 
-        lblWard.Location = new System.Drawing.Point(12, 120);
-        lblWard.Name = "lblWard";
-        lblWard.Size = new System.Drawing.Size(100, 27);
-        lblWard.TabIndex = 42;
-        lblWard.Text = "Палата:";
-        // 
-        // txtWardSearch
-        // 
-        txtWardSearch.Location = new System.Drawing.Point(150, 120);
-        txtWardSearch.Name = "txtWardSearch";
-        txtWardSearch.PlaceholderText = "Введите номер палаты";
-        txtWardSearch.Size = new System.Drawing.Size(150, 27);
-        txtWardSearch.TabIndex = 41;
-        // 
-        // btnWardSearch
-        // 
-        btnWardSearch.Location = new System.Drawing.Point(310, 120);
-        btnWardSearch.Name = "btnWardSearch";
-        btnWardSearch.Size = new System.Drawing.Size(80, 27);
-        btnWardSearch.TabIndex = 40;
-        btnWardSearch.Text = "Найти";
-        btnWardSearch.Click += btnWardSearch_Click;
-        // 
-        // lstWardResults
-        // 
-        lstWardResults.Location = new System.Drawing.Point(150, 150);
-        lstWardResults.Name = "lstWardResults";
-        lstWardResults.Size = new System.Drawing.Size(240, 44);
-        lstWardResults.TabIndex = 39;
-        lstWardResults.Visible = false;
-        lstWardResults.Click += lstWardResults_Click;
-        // 
-        // lblSelectedWard
-        // 
-        lblSelectedWard.Location = new System.Drawing.Point(12, 155);
-        lblSelectedWard.Name = "lblSelectedWard";
-        lblSelectedWard.Size = new System.Drawing.Size(130, 27);
-        lblSelectedWard.TabIndex = 38;
-        lblSelectedWard.Text = "Не выбрано";
-        // 
         // lblAdmittingDoctor
         // 
-        lblAdmittingDoctor.Location = new System.Drawing.Point(12, 190);
+        lblAdmittingDoctor.Location = new System.Drawing.Point(12, 123);
         lblAdmittingDoctor.Name = "lblAdmittingDoctor";
-        lblAdmittingDoctor.Size = new System.Drawing.Size(130, 27);
+        lblAdmittingDoctor.Size = new System.Drawing.Size(158, 27);
         lblAdmittingDoctor.TabIndex = 37;
         lblAdmittingDoctor.Text = "Принимающий врач:";
         // 
         // txtAdmittingDoctorSearch
         // 
-        txtAdmittingDoctorSearch.Location = new System.Drawing.Point(150, 190);
+        txtAdmittingDoctorSearch.Location = new System.Drawing.Point(176, 123);
         txtAdmittingDoctorSearch.Name = "txtAdmittingDoctorSearch";
         txtAdmittingDoctorSearch.PlaceholderText = "Введите фамилию врача";
         txtAdmittingDoctorSearch.Size = new System.Drawing.Size(200, 27);
@@ -176,7 +129,7 @@ partial class AnamnesisForm
         // 
         // btnAdmittingDoctorSearch
         // 
-        btnAdmittingDoctorSearch.Location = new System.Drawing.Point(360, 190);
+        btnAdmittingDoctorSearch.Location = new System.Drawing.Point(386, 123);
         btnAdmittingDoctorSearch.Name = "btnAdmittingDoctorSearch";
         btnAdmittingDoctorSearch.Size = new System.Drawing.Size(80, 27);
         btnAdmittingDoctorSearch.TabIndex = 35;
@@ -185,7 +138,7 @@ partial class AnamnesisForm
         // 
         // lstAdmittingDoctorResults
         // 
-        lstAdmittingDoctorResults.Location = new System.Drawing.Point(150, 220);
+        lstAdmittingDoctorResults.Location = new System.Drawing.Point(176, 153);
         lstAdmittingDoctorResults.Name = "lstAdmittingDoctorResults";
         lstAdmittingDoctorResults.Size = new System.Drawing.Size(290, 44);
         lstAdmittingDoctorResults.TabIndex = 34;
@@ -194,7 +147,7 @@ partial class AnamnesisForm
         // 
         // lblSelectedAdmittingDoctor
         // 
-        lblSelectedAdmittingDoctor.Location = new System.Drawing.Point(12, 225);
+        lblSelectedAdmittingDoctor.Location = new System.Drawing.Point(12, 158);
         lblSelectedAdmittingDoctor.Name = "lblSelectedAdmittingDoctor";
         lblSelectedAdmittingDoctor.Size = new System.Drawing.Size(130, 27);
         lblSelectedAdmittingDoctor.TabIndex = 33;
@@ -202,7 +155,7 @@ partial class AnamnesisForm
         // 
         // lblAttendingDoctor
         // 
-        lblAttendingDoctor.Location = new System.Drawing.Point(12, 260);
+        lblAttendingDoctor.Location = new System.Drawing.Point(12, 193);
         lblAttendingDoctor.Name = "lblAttendingDoctor";
         lblAttendingDoctor.Size = new System.Drawing.Size(130, 27);
         lblAttendingDoctor.TabIndex = 32;
@@ -210,7 +163,7 @@ partial class AnamnesisForm
         // 
         // txtAttendingDoctorSearch
         // 
-        txtAttendingDoctorSearch.Location = new System.Drawing.Point(150, 260);
+        txtAttendingDoctorSearch.Location = new System.Drawing.Point(176, 193);
         txtAttendingDoctorSearch.Name = "txtAttendingDoctorSearch";
         txtAttendingDoctorSearch.PlaceholderText = "Введите фамилию врача";
         txtAttendingDoctorSearch.Size = new System.Drawing.Size(200, 27);
@@ -218,7 +171,7 @@ partial class AnamnesisForm
         // 
         // btnAttendingDoctorSearch
         // 
-        btnAttendingDoctorSearch.Location = new System.Drawing.Point(360, 260);
+        btnAttendingDoctorSearch.Location = new System.Drawing.Point(386, 193);
         btnAttendingDoctorSearch.Name = "btnAttendingDoctorSearch";
         btnAttendingDoctorSearch.Size = new System.Drawing.Size(80, 27);
         btnAttendingDoctorSearch.TabIndex = 30;
@@ -227,7 +180,7 @@ partial class AnamnesisForm
         // 
         // lstAttendingDoctorResults
         // 
-        lstAttendingDoctorResults.Location = new System.Drawing.Point(150, 290);
+        lstAttendingDoctorResults.Location = new System.Drawing.Point(176, 223);
         lstAttendingDoctorResults.Name = "lstAttendingDoctorResults";
         lstAttendingDoctorResults.Size = new System.Drawing.Size(290, 44);
         lstAttendingDoctorResults.TabIndex = 29;
@@ -236,7 +189,7 @@ partial class AnamnesisForm
         // 
         // lblSelectedAttendingDoctor
         // 
-        lblSelectedAttendingDoctor.Location = new System.Drawing.Point(12, 295);
+        lblSelectedAttendingDoctor.Location = new System.Drawing.Point(12, 228);
         lblSelectedAttendingDoctor.Name = "lblSelectedAttendingDoctor";
         lblSelectedAttendingDoctor.Size = new System.Drawing.Size(130, 27);
         lblSelectedAttendingDoctor.TabIndex = 28;
@@ -244,7 +197,7 @@ partial class AnamnesisForm
         // 
         // lblComplaints
         // 
-        lblComplaints.Location = new System.Drawing.Point(12, 340);
+        lblComplaints.Location = new System.Drawing.Point(12, 273);
         lblComplaints.Name = "lblComplaints";
         lblComplaints.Size = new System.Drawing.Size(100, 27);
         lblComplaints.TabIndex = 27;
@@ -252,7 +205,7 @@ partial class AnamnesisForm
         // 
         // txtComplaints
         // 
-        txtComplaints.Location = new System.Drawing.Point(150, 340);
+        txtComplaints.Location = new System.Drawing.Point(176, 273);
         txtComplaints.Multiline = true;
         txtComplaints.Name = "txtComplaints";
         txtComplaints.Size = new System.Drawing.Size(400, 60);
@@ -260,15 +213,15 @@ partial class AnamnesisForm
         // 
         // lblMedicalHistory
         // 
-        lblMedicalHistory.Location = new System.Drawing.Point(12, 420);
+        lblMedicalHistory.Location = new System.Drawing.Point(12, 353);
         lblMedicalHistory.Name = "lblMedicalHistory";
-        lblMedicalHistory.Size = new System.Drawing.Size(130, 27);
+        lblMedicalHistory.Size = new System.Drawing.Size(139, 27);
         lblMedicalHistory.TabIndex = 25;
         lblMedicalHistory.Text = "История болезни:";
         // 
         // txtMedicalHistory
         // 
-        txtMedicalHistory.Location = new System.Drawing.Point(150, 420);
+        txtMedicalHistory.Location = new System.Drawing.Point(176, 353);
         txtMedicalHistory.Multiline = true;
         txtMedicalHistory.Name = "txtMedicalHistory";
         txtMedicalHistory.Size = new System.Drawing.Size(400, 60);
@@ -276,7 +229,7 @@ partial class AnamnesisForm
         // 
         // lblAllergies
         // 
-        lblAllergies.Location = new System.Drawing.Point(12, 500);
+        lblAllergies.Location = new System.Drawing.Point(12, 433);
         lblAllergies.Name = "lblAllergies";
         lblAllergies.Size = new System.Drawing.Size(100, 27);
         lblAllergies.TabIndex = 23;
@@ -285,7 +238,7 @@ partial class AnamnesisForm
         // clbAllergies
         // 
         clbAllergies.CheckOnClick = true;
-        clbAllergies.Location = new System.Drawing.Point(150, 500);
+        clbAllergies.Location = new System.Drawing.Point(176, 433);
         clbAllergies.Name = "clbAllergies";
         clbAllergies.Size = new System.Drawing.Size(400, 92);
         clbAllergies.TabIndex = 22;
@@ -293,7 +246,7 @@ partial class AnamnesisForm
         // txtOtherAllergy
         // 
         txtOtherAllergy.Enabled = false;
-        txtOtherAllergy.Location = new System.Drawing.Point(150, 605);
+        txtOtherAllergy.Location = new System.Drawing.Point(176, 538);
         txtOtherAllergy.Name = "txtOtherAllergy";
         txtOtherAllergy.PlaceholderText = "Если выбрали \'Другое\', укажите аллергию";
         txtOtherAllergy.Size = new System.Drawing.Size(400, 27);
@@ -301,16 +254,16 @@ partial class AnamnesisForm
         // 
         // lblBadHabits
         // 
-        lblBadHabits.Location = new System.Drawing.Point(12, 650);
+        lblBadHabits.Location = new System.Drawing.Point(12, 583);
         lblBadHabits.Name = "lblBadHabits";
-        lblBadHabits.Size = new System.Drawing.Size(130, 27);
+        lblBadHabits.Size = new System.Drawing.Size(158, 27);
         lblBadHabits.TabIndex = 20;
         lblBadHabits.Text = "Вредные привычки:";
         // 
         // clbBadHabits
         // 
         clbBadHabits.CheckOnClick = true;
-        clbBadHabits.Location = new System.Drawing.Point(150, 650);
+        clbBadHabits.Location = new System.Drawing.Point(176, 583);
         clbBadHabits.Name = "clbBadHabits";
         clbBadHabits.Size = new System.Drawing.Size(400, 92);
         clbBadHabits.TabIndex = 19;
@@ -318,7 +271,7 @@ partial class AnamnesisForm
         // txtOtherBadHabit
         // 
         txtOtherBadHabit.Enabled = false;
-        txtOtherBadHabit.Location = new System.Drawing.Point(150, 755);
+        txtOtherBadHabit.Location = new System.Drawing.Point(176, 681);
         txtOtherBadHabit.Name = "txtOtherBadHabit";
         txtOtherBadHabit.PlaceholderText = "Если выбрали \'Другое\', укажите вредную привычку";
         txtOtherBadHabit.Size = new System.Drawing.Size(400, 27);
@@ -326,37 +279,37 @@ partial class AnamnesisForm
         // 
         // lblBloodPressureLow
         // 
-        lblBloodPressureLow.Location = new System.Drawing.Point(12, 800);
+        lblBloodPressureLow.Location = new System.Drawing.Point(12, 733);
         lblBloodPressureLow.Name = "lblBloodPressureLow";
-        lblBloodPressureLow.Size = new System.Drawing.Size(130, 27);
+        lblBloodPressureLow.Size = new System.Drawing.Size(139, 27);
         lblBloodPressureLow.TabIndex = 17;
         lblBloodPressureLow.Text = "Давление (нижн.):";
         // 
         // txtBloodPressureLow
         // 
-        txtBloodPressureLow.Location = new System.Drawing.Point(150, 800);
+        txtBloodPressureLow.Location = new System.Drawing.Point(150, 733);
         txtBloodPressureLow.Name = "txtBloodPressureLow";
         txtBloodPressureLow.Size = new System.Drawing.Size(80, 27);
         txtBloodPressureLow.TabIndex = 16;
         // 
         // lblBloodPressureHigh
         // 
-        lblBloodPressureHigh.Location = new System.Drawing.Point(260, 800);
+        lblBloodPressureHigh.Location = new System.Drawing.Point(260, 733);
         lblBloodPressureHigh.Name = "lblBloodPressureHigh";
-        lblBloodPressureHigh.Size = new System.Drawing.Size(130, 27);
+        lblBloodPressureHigh.Size = new System.Drawing.Size(145, 27);
         lblBloodPressureHigh.TabIndex = 15;
         lblBloodPressureHigh.Text = "Давление (верхн.):";
         // 
         // txtBloodPressureHigh
         // 
-        txtBloodPressureHigh.Location = new System.Drawing.Point(400, 800);
+        txtBloodPressureHigh.Location = new System.Drawing.Point(400, 733);
         txtBloodPressureHigh.Name = "txtBloodPressureHigh";
         txtBloodPressureHigh.Size = new System.Drawing.Size(80, 27);
         txtBloodPressureHigh.TabIndex = 14;
         // 
         // lblPulse
         // 
-        lblPulse.Location = new System.Drawing.Point(12, 840);
+        lblPulse.Location = new System.Drawing.Point(12, 773);
         lblPulse.Name = "lblPulse";
         lblPulse.Size = new System.Drawing.Size(80, 27);
         lblPulse.TabIndex = 13;
@@ -364,14 +317,14 @@ partial class AnamnesisForm
         // 
         // txtPulse
         // 
-        txtPulse.Location = new System.Drawing.Point(90, 840);
+        txtPulse.Location = new System.Drawing.Point(90, 773);
         txtPulse.Name = "txtPulse";
         txtPulse.Size = new System.Drawing.Size(80, 27);
         txtPulse.TabIndex = 12;
         // 
         // lblSaturation
         // 
-        lblSaturation.Location = new System.Drawing.Point(200, 840);
+        lblSaturation.Location = new System.Drawing.Point(200, 773);
         lblSaturation.Name = "lblSaturation";
         lblSaturation.Size = new System.Drawing.Size(90, 27);
         lblSaturation.TabIndex = 11;
@@ -379,14 +332,14 @@ partial class AnamnesisForm
         // 
         // txtSaturation
         // 
-        txtSaturation.Location = new System.Drawing.Point(300, 840);
+        txtSaturation.Location = new System.Drawing.Point(300, 773);
         txtSaturation.Name = "txtSaturation";
         txtSaturation.Size = new System.Drawing.Size(80, 27);
         txtSaturation.TabIndex = 10;
         // 
         // lblThermometry
         // 
-        lblThermometry.Location = new System.Drawing.Point(420, 840);
+        lblThermometry.Location = new System.Drawing.Point(420, 773);
         lblThermometry.Name = "lblThermometry";
         lblThermometry.Size = new System.Drawing.Size(100, 27);
         lblThermometry.TabIndex = 9;
@@ -394,14 +347,14 @@ partial class AnamnesisForm
         // 
         // txtThermometry
         // 
-        txtThermometry.Location = new System.Drawing.Point(530, 840);
+        txtThermometry.Location = new System.Drawing.Point(530, 773);
         txtThermometry.Name = "txtThermometry";
         txtThermometry.Size = new System.Drawing.Size(80, 27);
         txtThermometry.TabIndex = 8;
         // 
         // lblSkin
         // 
-        lblSkin.Location = new System.Drawing.Point(12, 880);
+        lblSkin.Location = new System.Drawing.Point(12, 813);
         lblSkin.Name = "lblSkin";
         lblSkin.Size = new System.Drawing.Size(80, 27);
         lblSkin.TabIndex = 7;
@@ -409,14 +362,14 @@ partial class AnamnesisForm
         // 
         // txtSkin
         // 
-        txtSkin.Location = new System.Drawing.Point(90, 880);
+        txtSkin.Location = new System.Drawing.Point(90, 813);
         txtSkin.Name = "txtSkin";
         txtSkin.Size = new System.Drawing.Size(250, 27);
         txtSkin.TabIndex = 6;
         // 
         // lblMucosal
         // 
-        lblMucosal.Location = new System.Drawing.Point(380, 880);
+        lblMucosal.Location = new System.Drawing.Point(380, 813);
         lblMucosal.Name = "lblMucosal";
         lblMucosal.Size = new System.Drawing.Size(90, 27);
         lblMucosal.TabIndex = 5;
@@ -424,14 +377,14 @@ partial class AnamnesisForm
         // 
         // txtMucosal
         // 
-        txtMucosal.Location = new System.Drawing.Point(480, 880);
+        txtMucosal.Location = new System.Drawing.Point(480, 813);
         txtMucosal.Name = "txtMucosal";
         txtMucosal.Size = new System.Drawing.Size(250, 27);
         txtMucosal.TabIndex = 4;
         // 
         // btnAdd
         // 
-        btnAdd.Location = new System.Drawing.Point(12, 940);
+        btnAdd.Location = new System.Drawing.Point(12, 873);
         btnAdd.Name = "btnAdd";
         btnAdd.Size = new System.Drawing.Size(100, 35);
         btnAdd.TabIndex = 3;
@@ -440,7 +393,7 @@ partial class AnamnesisForm
         // 
         // btnUpdate
         // 
-        btnUpdate.Location = new System.Drawing.Point(120, 940);
+        btnUpdate.Location = new System.Drawing.Point(120, 873);
         btnUpdate.Name = "btnUpdate";
         btnUpdate.Size = new System.Drawing.Size(100, 35);
         btnUpdate.TabIndex = 2;
@@ -449,7 +402,7 @@ partial class AnamnesisForm
         // 
         // btnDelete
         // 
-        btnDelete.Location = new System.Drawing.Point(230, 940);
+        btnDelete.Location = new System.Drawing.Point(230, 873);
         btnDelete.Name = "btnDelete";
         btnDelete.Size = new System.Drawing.Size(100, 35);
         btnDelete.TabIndex = 1;
@@ -459,10 +412,10 @@ partial class AnamnesisForm
         // dgvAnamnesis
         // 
         dgvAnamnesis.ColumnHeadersHeight = 29;
-        dgvAnamnesis.Location = new System.Drawing.Point(805, 15);
+        dgvAnamnesis.Location = new System.Drawing.Point(736, 20);
         dgvAnamnesis.Name = "dgvAnamnesis";
         dgvAnamnesis.RowHeadersWidth = 51;
-        dgvAnamnesis.Size = new System.Drawing.Size(1103, 200);
+        dgvAnamnesis.Size = new System.Drawing.Size(1172, 845);
         dgvAnamnesis.TabIndex = 0;
         dgvAnamnesis.CellClick += dgvAnamnesis_CellClick;
         // 
@@ -509,11 +462,6 @@ partial class AnamnesisForm
         Controls.Add(btnAdmittingDoctorSearch);
         Controls.Add(txtAdmittingDoctorSearch);
         Controls.Add(lblAdmittingDoctor);
-        Controls.Add(lblSelectedWard);
-        Controls.Add(lstWardResults);
-        Controls.Add(btnWardSearch);
-        Controls.Add(txtWardSearch);
-        Controls.Add(lblWard);
         Controls.Add(dtpDateOfArrive);
         Controls.Add(lblDateOfArrive);
         Controls.Add(dtpDateOfDischarge);
@@ -527,53 +475,48 @@ partial class AnamnesisForm
     }
 
     // Объявления полей
-    private Label lblPatient;
-    private Label lblPatientName;
-    private Label lblDateOfDischarge;
-    private DateTimePicker dtpDateOfDischarge;
-    private Label lblDateOfArrive;
-    private DateTimePicker dtpDateOfArrive;
-    private Label lblWard;
-    private TextBox txtWardSearch;
-    private Button btnWardSearch;
-    private ListBox lstWardResults;
-    private Label lblSelectedWard;
-    private Label lblAdmittingDoctor;
-    private TextBox txtAdmittingDoctorSearch;
-    private Button btnAdmittingDoctorSearch;
-    private ListBox lstAdmittingDoctorResults;
-    private Label lblSelectedAdmittingDoctor;
-    private Label lblAttendingDoctor;
-    private TextBox txtAttendingDoctorSearch;
-    private Button btnAttendingDoctorSearch;
-    private ListBox lstAttendingDoctorResults;
-    private Label lblSelectedAttendingDoctor;
-    private Label lblComplaints;
-    private TextBox txtComplaints;
-    private Label lblMedicalHistory;
-    private TextBox txtMedicalHistory;
-    private Label lblAllergies;
-    private CheckedListBox clbAllergies;
-    private TextBox txtOtherAllergy;
-    private Label lblBadHabits;
-    private CheckedListBox clbBadHabits;
-    private TextBox txtOtherBadHabit;
-    private Label lblBloodPressureLow;
-    private TextBox txtBloodPressureLow;
-    private Label lblBloodPressureHigh;
-    private TextBox txtBloodPressureHigh;
-    private Label lblPulse;
-    private TextBox txtPulse;
-    private Label lblSaturation;
-    private TextBox txtSaturation;
-    private Label lblThermometry;
-    private TextBox txtThermometry;
-    private Label lblSkin;
-    private TextBox txtSkin;
-    private Label lblMucosal;
-    private TextBox txtMucosal;
-    private Button btnAdd;
-    private Button btnUpdate;
-    private Button btnDelete;
+    private System.Windows.Forms.Label lblPatient;
+    private System.Windows.Forms.Label lblPatientName;
+    private System.Windows.Forms.Label lblDateOfDischarge;
+    private System.Windows.Forms.DateTimePicker dtpDateOfDischarge;
+    private System.Windows.Forms.Label lblDateOfArrive;
+    private System.Windows.Forms.DateTimePicker dtpDateOfArrive;
+    private System.Windows.Forms.Label lblAdmittingDoctor;
+    private System.Windows.Forms.TextBox txtAdmittingDoctorSearch;
+    private System.Windows.Forms.Button btnAdmittingDoctorSearch;
+    private System.Windows.Forms.ListBox lstAdmittingDoctorResults;
+    private System.Windows.Forms.Label lblSelectedAdmittingDoctor;
+    private System.Windows.Forms.Label lblAttendingDoctor;
+    private System.Windows.Forms.TextBox txtAttendingDoctorSearch;
+    private System.Windows.Forms.Button btnAttendingDoctorSearch;
+    private System.Windows.Forms.ListBox lstAttendingDoctorResults;
+    private System.Windows.Forms.Label lblSelectedAttendingDoctor;
+    private System.Windows.Forms.Label lblComplaints;
+    private System.Windows.Forms.TextBox txtComplaints;
+    private System.Windows.Forms.Label lblMedicalHistory;
+    private System.Windows.Forms.TextBox txtMedicalHistory;
+    private System.Windows.Forms.Label lblAllergies;
+    private System.Windows.Forms.CheckedListBox clbAllergies;
+    private System.Windows.Forms.TextBox txtOtherAllergy;
+    private System.Windows.Forms.Label lblBadHabits;
+    private System.Windows.Forms.CheckedListBox clbBadHabits;
+    private System.Windows.Forms.TextBox txtOtherBadHabit;
+    private System.Windows.Forms.Label lblBloodPressureLow;
+    private System.Windows.Forms.TextBox txtBloodPressureLow;
+    private System.Windows.Forms.Label lblBloodPressureHigh;
+    private System.Windows.Forms.TextBox txtBloodPressureHigh;
+    private System.Windows.Forms.Label lblPulse;
+    private System.Windows.Forms.TextBox txtPulse;
+    private System.Windows.Forms.Label lblSaturation;
+    private System.Windows.Forms.TextBox txtSaturation;
+    private System.Windows.Forms.Label lblThermometry;
+    private System.Windows.Forms.TextBox txtThermometry;
+    private System.Windows.Forms.Label lblSkin;
+    private System.Windows.Forms.TextBox txtSkin;
+    private System.Windows.Forms.Label lblMucosal;
+    private System.Windows.Forms.TextBox txtMucosal;
+    private System.Windows.Forms.Button btnAdd;
+    private System.Windows.Forms.Button btnUpdate;
+    private System.Windows.Forms.Button btnDelete;
     private System.Windows.Forms.DataGridView dgvAnamnesis;
 }

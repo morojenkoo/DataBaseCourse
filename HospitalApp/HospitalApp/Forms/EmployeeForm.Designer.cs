@@ -67,11 +67,23 @@ partial class EmployeeForm
         btnDelete = new System.Windows.Forms.Button();
         dgvEmployees = new System.Windows.Forms.DataGridView();
         panelGender = new System.Windows.Forms.Panel();
+        gbSchedule = new System.Windows.Forms.GroupBox();
+        dgvSchedule = new System.Windows.Forms.DataGridView();
+        lblScheduleDate = new System.Windows.Forms.Label();
+        dtpScheduleDate = new System.Windows.Forms.DateTimePicker();
+        lblScheduleFrom = new System.Windows.Forms.Label();
+        dtpScheduleFrom = new System.Windows.Forms.DateTimePicker();
+        lblScheduleTo = new System.Windows.Forms.Label();
+        dtpScheduleTo = new System.Windows.Forms.DateTimePicker();
+        btnAddSchedule = new System.Windows.Forms.Button();
+        btnDeleteSchedule = new System.Windows.Forms.Button();
         pnlDoctor.SuspendLayout();
         pnlNurse.SuspendLayout();
         pnlSanitar.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dgvEmployees).BeginInit();
         panelGender.SuspendLayout();
+        gbSchedule.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)dgvSchedule).BeginInit();
         SuspendLayout();
         // 
         // lblSurname
@@ -485,10 +497,10 @@ partial class EmployeeForm
         // dgvEmployees
         // 
         dgvEmployees.ColumnHeadersHeight = 29;
-        dgvEmployees.Location = new System.Drawing.Point(12, 582);
+        dgvEmployees.Location = new System.Drawing.Point(558, 9);
         dgvEmployees.Name = "dgvEmployees";
         dgvEmployees.RowHeadersWidth = 51;
-        dgvEmployees.Size = new System.Drawing.Size(800, 250);
+        dgvEmployees.Size = new System.Drawing.Size(1350, 853);
         dgvEmployees.TabIndex = 0;
         dgvEmployees.CellClick += dgvEmployees_CellClick;
         // 
@@ -501,11 +513,109 @@ partial class EmployeeForm
         panelGender.Size = new System.Drawing.Size(400, 31);
         panelGender.TabIndex = 0;
         // 
+        // gbSchedule
+        // 
+        gbSchedule.Controls.Add(dgvSchedule);
+        gbSchedule.Controls.Add(lblScheduleDate);
+        gbSchedule.Controls.Add(dtpScheduleDate);
+        gbSchedule.Controls.Add(lblScheduleFrom);
+        gbSchedule.Controls.Add(dtpScheduleFrom);
+        gbSchedule.Controls.Add(lblScheduleTo);
+        gbSchedule.Controls.Add(dtpScheduleTo);
+        gbSchedule.Controls.Add(btnAddSchedule);
+        gbSchedule.Controls.Add(btnDeleteSchedule);
+        gbSchedule.Location = new System.Drawing.Point(12, 582);
+        gbSchedule.Name = "gbSchedule";
+        gbSchedule.Size = new System.Drawing.Size(450, 280);
+        gbSchedule.TabIndex = 0;
+        gbSchedule.TabStop = false;
+        gbSchedule.Text = "Рабочий график";
+        // 
+        // dgvSchedule
+        // 
+        dgvSchedule.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+        dgvSchedule.ColumnHeadersHeight = 29;
+        dgvSchedule.Location = new System.Drawing.Point(10, 25);
+        dgvSchedule.Name = "dgvSchedule";
+        dgvSchedule.RowHeadersWidth = 51;
+        dgvSchedule.Size = new System.Drawing.Size(430, 150);
+        dgvSchedule.TabIndex = 0;
+        dgvSchedule.CellClick += dgvSchedule_CellClick;
+        // 
+        // lblScheduleDate
+        // 
+        lblScheduleDate.Location = new System.Drawing.Point(10, 185);
+        lblScheduleDate.Name = "lblScheduleDate";
+        lblScheduleDate.Size = new System.Drawing.Size(50, 27);
+        lblScheduleDate.TabIndex = 1;
+        lblScheduleDate.Text = "Дата:";
+        // 
+        // dtpScheduleDate
+        // 
+        dtpScheduleDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+        dtpScheduleDate.Location = new System.Drawing.Point(70, 185);
+        dtpScheduleDate.Name = "dtpScheduleDate";
+        dtpScheduleDate.Size = new System.Drawing.Size(120, 27);
+        dtpScheduleDate.TabIndex = 2;
+        // 
+        // lblScheduleFrom
+        // 
+        lblScheduleFrom.Location = new System.Drawing.Point(200, 185);
+        lblScheduleFrom.Name = "lblScheduleFrom";
+        lblScheduleFrom.Size = new System.Drawing.Size(30, 27);
+        lblScheduleFrom.TabIndex = 3;
+        lblScheduleFrom.Text = "С:";
+        // 
+        // dtpScheduleFrom
+        // 
+        dtpScheduleFrom.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+        dtpScheduleFrom.Location = new System.Drawing.Point(240, 185);
+        dtpScheduleFrom.Name = "dtpScheduleFrom";
+        dtpScheduleFrom.ShowUpDown = true;
+        dtpScheduleFrom.Size = new System.Drawing.Size(80, 27);
+        dtpScheduleFrom.TabIndex = 4;
+        // 
+        // lblScheduleTo
+        // 
+        lblScheduleTo.Location = new System.Drawing.Point(330, 185);
+        lblScheduleTo.Name = "lblScheduleTo";
+        lblScheduleTo.Size = new System.Drawing.Size(30, 27);
+        lblScheduleTo.TabIndex = 5;
+        lblScheduleTo.Text = "До:";
+        // 
+        // dtpScheduleTo
+        // 
+        dtpScheduleTo.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+        dtpScheduleTo.Location = new System.Drawing.Point(370, 185);
+        dtpScheduleTo.Name = "dtpScheduleTo";
+        dtpScheduleTo.ShowUpDown = true;
+        dtpScheduleTo.Size = new System.Drawing.Size(80, 27);
+        dtpScheduleTo.TabIndex = 6;
+        // 
+        // btnAddSchedule
+        // 
+        btnAddSchedule.Location = new System.Drawing.Point(10, 225);
+        btnAddSchedule.Name = "btnAddSchedule";
+        btnAddSchedule.Size = new System.Drawing.Size(150, 30);
+        btnAddSchedule.TabIndex = 7;
+        btnAddSchedule.Text = "Добавить/Обновить";
+        btnAddSchedule.Click += btnAddSchedule_Click;
+        // 
+        // btnDeleteSchedule
+        // 
+        btnDeleteSchedule.Location = new System.Drawing.Point(170, 225);
+        btnDeleteSchedule.Name = "btnDeleteSchedule";
+        btnDeleteSchedule.Size = new System.Drawing.Size(100, 30);
+        btnDeleteSchedule.TabIndex = 8;
+        btnDeleteSchedule.Text = "Удалить";
+        btnDeleteSchedule.Click += btnDeleteSchedule_Click;
+        // 
         // EmployeeForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(1920, 1055);
+        Controls.Add(gbSchedule);
         Controls.Add(panelGender);
         Controls.Add(dgvEmployees);
         Controls.Add(btnDelete);
@@ -545,6 +655,8 @@ partial class EmployeeForm
         pnlSanitar.ResumeLayout(false);
         ((System.ComponentModel.ISupportInitialize)dgvEmployees).EndInit();
         panelGender.ResumeLayout(false);
+        gbSchedule.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)dgvSchedule).EndInit();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -558,7 +670,11 @@ partial class EmployeeForm
     private DateTimePicker dtpBirthDate;
     private ComboBox cmbDepartment;
     private RadioButton rbDoctor, rbNurse, rbSanitar;
-
+    private System.Windows.Forms.GroupBox gbSchedule;
+    private DataGridView dgvSchedule;
+    private Label lblScheduleDate, lblScheduleFrom, lblScheduleTo;
+    private DateTimePicker dtpScheduleDate, dtpScheduleFrom, dtpScheduleTo;
+    private Button btnAddSchedule, btnDeleteSchedule;
     private GroupBox pnlDoctor, pnlNurse, pnlSanitar;
     private Label lblSpecialization, lblCertificate, lblAcademicDegree, lblQualification, lblRank;
     private TextBox txtSpecialization, txtCertificate, txtAcademicDegree, txtRank;
@@ -574,5 +690,5 @@ partial class EmployeeForm
 
     private Button btnAdd, btnUpdate, btnDelete;
 
-    private DataGridView dgvEmployees;
+    private System.Windows.Forms.DataGridView dgvEmployees;
 }

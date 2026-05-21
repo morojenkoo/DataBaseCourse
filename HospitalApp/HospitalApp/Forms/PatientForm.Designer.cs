@@ -198,7 +198,7 @@ partial class PatientForm
         // 
         // btnAnamnesis
         // 
-        btnAnamnesis.Location = new System.Drawing.Point(1369, 893);
+        btnAnamnesis.Location = new System.Drawing.Point(7, 815);
         btnAnamnesis.Name = "btnAnamnesis";
         btnAnamnesis.Size = new System.Drawing.Size(100, 25);
         btnAnamnesis.TabIndex = 19;
@@ -260,7 +260,7 @@ partial class PatientForm
         dgvPatients.Location = new System.Drawing.Point(7, 96);
         dgvPatients.Name = "dgvPatients";
         dgvPatients.RowHeadersWidth = 51;
-        dgvPatients.Size = new System.Drawing.Size(1901, 377);
+        dgvPatients.Size = new System.Drawing.Size(1035, 377);
         dgvPatients.TabIndex = 27;
         dgvPatients.CellClick += dgvPatients_CellClick;
         // 

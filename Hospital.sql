@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Employee (
 	Position INT NOT NULL CHECK (Position IN (1,2,3)), -- 1 доктор, 2 медсестра, 3 санитар
 	Department_ID INT NOT NULL,
 	Passport_number VARCHAR(11) NOT NULL UNIQUE CHECK (passport_number ~ '^\d{4} \d{6}$'),
-	FOREIGN KEY (Department_ID) REFERENCES Department(Department_ID),
+	FOREIGN KEY (Department_ID) REFERENCES Department(Department_ID) ON DELETE CASCADE,
 	UNIQUE (Employee_ID, Position)
 );
 
@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS Doctor (
 	Rank VARCHAR(50) NOT NULL, -- должность (зав. отделения, глав врач и прочие)
 	FOREIGN KEY (Employee_ID, Position) REFERENCES Employee (Employee_ID, Position) ON DELETE CASCADE
 );
-
 CREATE OR REPLACE VIEW Employee_Doctor AS 
 SELECT
 	e.Employee_ID,
@@ -105,7 +104,7 @@ CREATE TABLE IF NOT EXISTS Ward (
 	Isolation_status VARCHAR(50) NOT NULL,
 	Ward_number INT NOT NULL,
 	Department_ID INT NOT NULL,
-	FOREIGN KEY (Department_ID) REFERENCES Department (Department_ID),
+	FOREIGN KEY (Department_ID) REFERENCES Department (Department_ID) ON DELETE CASCADE,
 	UNIQUE (Department_ID, Ward_number)
 );
 
@@ -113,7 +112,7 @@ CREATE TABLE IF NOT EXISTS Work_schedule (
 	Schedule_ID SERIAL PRIMARY KEY,
 	Employee_ID INT NOT NULL,
 	Schedule JSONB NOT NULL,
-	FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID)
+	FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Patient (
@@ -143,46 +142,59 @@ CREATE TABLE IF NOT EXISTS Anamnesis (
 	Skin TEXT NOT NULL,
 	Mucosal TEXT NOT NULL,
 	Thermometry NUMERIC(3,1) NOT NULL,
-	Ward_ID INT NOT NULL,
+	Ward_ID INT NULL,
 	Admitting_doctor_ID INT NOT NULL,
 	Attending_doctor_ID INT NOT NULL,
 	Patient_ID INT NOT NULL,
-	FOREIGN KEY (Ward_ID) REFERENCES Ward (Ward_ID),
-	FOREIGN KEY (Admitting_doctor_ID) REFERENCES Doctor(Employee_ID),
-	FOREIGN KEY (Attending_doctor_ID) REFERENCES Doctor(Employee_ID),
-	FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID)
+	FOREIGN KEY (Ward_ID) REFERENCES Ward (Ward_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Admitting_doctor_ID) REFERENCES Doctor(Employee_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Attending_doctor_ID) REFERENCES Doctor(Employee_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID) ON DELETE CASCADE
 );
 
 /*
+
+ALTER TABLE Employee 
+DROP CONSTRAINT employee_department_id_fkey,
+ADD CONSTRAINT employee_department_id_fkey 
+FOREIGN KEY (Department_ID) REFERENCES Department(Department_ID) ON DELETE CASCADE;
+
+
+-- Department → Ward
+ALTER TABLE Ward 
+DROP CONSTRAINT ward_department_id_fkey,
+ADD CONSTRAINT ward_department_id_fkey 
+FOREIGN KEY (Department_ID) REFERENCES Department(Department_ID) ON DELETE CASCADE;
+
+-- Employee → Work_schedule
+ALTER TABLE Work_schedule 
+DROP CONSTRAINT work_schedule_employee_id_fkey,
+ADD CONSTRAINT work_schedule_employee_id_fkey 
+FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID) ON DELETE CASCADE;
+
+-- Ward → Anamnesis
+ALTER TABLE Anamnesis 
+DROP CONSTRAINT anamnesis_ward_id_fkey,
+ADD CONSTRAINT anamnesis_ward_id_fkey 
+FOREIGN KEY (Ward_ID) REFERENCES Ward(Ward_ID) ON DELETE CASCADE;
+
+-- Doctor → Anamnesis (Admitting_doctor_ID)
+ALTER TABLE Anamnesis 
+-- DROP CONSTRAINT anamnesis_admitting_doctor_id_fkey,
+ADD CONSTRAINT anamnesis_admitting_doctor_id_fkey 
+FOREIGN KEY (Admitting_doctor_ID) REFERENCES Doctor(Employee_ID) ON DELETE CASCADE;
+
+-- Doctor → Anamnesis (Attending_doctor_ID)
+ALTER TABLE Anamnesis 
+--DROP CONSTRAINT anamnesis_attending_doctor_id_fkey,
+ADD CONSTRAINT anamnesis_attending_doctor_id_fkey 
+FOREIGN KEY (Attending_doctor_ID) REFERENCES Doctor(Employee_ID) ON DELETE CASCADE;
+
+-- Patient → Anamnesis
+ALTER TABLE Anamnesis 
+DROP CONSTRAINT anamnesis_patient_id_fkey,
+ADD CONSTRAINT anamnesis_patient_id_fkey 
+FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID) ON DELETE CASCADE;
+
 TRUNCATE Department, Employee, Doctor, Nurse, Sanitar, Ward, Work_Schedule, Anamnesis, Patient RESTART IDENTITY CASCADE;
-
-
-INSERT INTO Department (Floor_number, Inner_phone, Department_name) VALUES
-	(1, '+7-901-000-00-00', 'Хирургическое отделение'),
-	(1, '+7-902-000-00-00', 'Детское отделение');
-	
-INSERT INTO Employee (Name, Patronymic, Surname, Gender, Date_of_birth, Phone_number, 
-	Position, Department_ID, Passport_number) VALUES
-	('Дмитрий', 'Сергеевич', 'Козинец', '1', '2006-02-15', '+7-968-412-73-88', 1, 1, '4619 693139'),
-	('Беляев', 'Игорь', 'Евгеньевич', '0', '2005-05-04', '+7-911-111-11-11', 2, 1, '1234 123456'),
-	('Амбросий', 'Николай', 'Евгеньевич', '1', '2005-10-11', '+7-922-222-22-22', 3, 2, '4321 654321');
-	
-INSERT INTO Doctor (Employee_ID, Position, Specialization, Certificate_number, Academic_degree, 
-	Qualification, Rank) VALUES
-	(1, 1, 'Хирург-травмотолог', '000000 0000000', 'Доктор наук', 3, 'Глав-врач');
-
-INSERT INTO Nurse (Employee_ID, Position, Certificate_number, Qualification, Rank) VALUES
-	(2, 2, '111111 1111111', 3, 'Старшая медсестра');
-
-INSERT INTO Sanitar (Employee_ID, Position, Admission) VALUES
-	(3, 3, '1');
-
-INSERT INTO Ward (Bed_count, VIP_status, Isolation_status, Ward_number, Department_ID) VALUES
-	(2, '0', 0, 1, 1);
-
-	
-SELECT * FROM Employee_Doctor;
-SELECT * FROM Employee_Nurse;
-SELECT * FROM Employee_Sanitar;
-SELECT * FROM Ward;
 */

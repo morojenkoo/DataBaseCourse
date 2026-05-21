@@ -11,10 +11,7 @@ namespace HospitalApp.Forms
         private readonly DataBaseHelper dbHelper;
         private int currentWardId = 0;
         private readonly int departmentId;
-        private System.Windows.Forms.Label lblStats;
-        private Button btnRefreshStats;
-        private DataGridView dgvPatientsInWard;
-        private Button btnAddAnamnesis;
+        
         public WardForm(int deptId)
         {
             InitializeComponent();
@@ -63,6 +60,8 @@ namespace HospitalApp.Forms
             if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvWards.Rows[e.RowIndex];
+            if (row.Cells["Номер_палаты"].Value == null || row.Cells["Номер_палаты"].Value == DBNull.Value)
+                return;
             int wardNumber = Convert.ToInt32(row.Cells["Номер_палаты"].Value);
 
             using (var conn = dbHelper.GetConnection())
@@ -209,10 +208,174 @@ namespace HospitalApp.Forms
                 return;
             }
 
-            MessageBox.Show($"Откроется форма добавления анамнеза в палату {currentWardId}");
-            // Позже сделаем AnamnesisForm
-            // AnamnesisForm anamnesisForm = new AnamnesisForm(currentWardId);
-            // anamnesisForm.ShowDialog();
+            if (!int.TryParse(txtAnamnesisId.Text, out int anamnesisId))
+            {
+                MessageBox.Show("Введите корректный номер истории болезни");
+                return;
+            }
+
+            try
+            {
+                using (var conn = dbHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    // 1. Проверяем существование анамнеза и его статус
+                    string checkQuery = @"
+                        SELECT Date_of_discharge 
+                        FROM Anamnesis 
+                        WHERE Anamnesis_ID = @anamnesisId";
+
+                    using (var cmd = new NpgsqlCommand(checkQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@anamnesisId", anamnesisId);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (!reader.Read())
+                            {
+                                MessageBox.Show("Анамнез с таким номером не найден");
+                                return;
+                            }
+
+                            if (reader["Date_of_discharge"] != DBNull.Value)
+                            {
+                                MessageBox.Show("Этот пациент уже выписан. Нельзя добавить в палату.");
+                                return;
+                            }
+                        }
+                    }
+
+                    // 2. Проверяем, есть ли свободное место в палате
+                    string capacityQuery = @"
+                        SELECT 
+                            Bed_count,
+                            (SELECT COUNT(*) FROM Anamnesis 
+                             WHERE Ward_ID = @wardId AND Date_of_discharge IS NULL) AS Occupied
+                        FROM Ward 
+                        WHERE Ward_ID = @wardId";
+
+                    using (var cmd = new NpgsqlCommand(capacityQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@wardId", currentWardId);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                int bedCount = reader.GetInt32(0);
+                                int occupied = reader.GetInt32(1);
+                                
+                                if (occupied >= bedCount)
+                                {
+                                    MessageBox.Show($"В палате нет свободных мест. Всего мест: {bedCount}, занято: {occupied}");
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
+                    // 3. Обновляем Ward_ID у анамнеза
+                    string updateQuery = "UPDATE Anamnesis SET Ward_ID = @wardId WHERE Anamnesis_ID = @anamnesisId";
+                    using (var cmd = new NpgsqlCommand(updateQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@wardId", currentWardId);
+                        cmd.Parameters.AddWithValue("@anamnesisId", anamnesisId);
+                        int rows = cmd.ExecuteNonQuery();
+                        
+                        if (rows > 0)
+                        {
+                            MessageBox.Show("Анамнез успешно добавлен в палату");
+                            RefreshStatsAndPatients();
+                            txtAnamnesisId.Text = "";
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ошибка при добавлении анамнеза");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: " + ex.Message);
+            }
+        }
+        private void btnDischarge_Click(object sender, EventArgs e)
+        {
+            if (currentWardId == 0)
+            {
+                MessageBox.Show("Выберите палату из списка");
+                return;
+            }
+            dgvPatientsInWard.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            if (dgvPatientsInWard.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите пациента из списка для выписки");
+                return;
+            }
+
+            string fio = dgvPatientsInWard.SelectedRows[0].Cells["ФИО"].Value.ToString();
+
+            if (MessageBox.Show($"Выписать пациента {fio}?", "Подтверждение", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
+
+            try
+            {
+                using (var conn = dbHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    // Находим анамнез пациента в этой палате (не выписанный)
+                    string findQuery = @"
+                        SELECT Anamnesis_ID 
+                        FROM Anamnesis 
+                        WHERE Ward_ID = @wardId AND Date_of_discharge IS NULL
+                        AND Patient_ID = (
+                            SELECT Patient_ID FROM Anamnesis 
+                            WHERE Ward_ID = @wardId AND Date_of_discharge IS NULL
+                            LIMIT 1
+                        )";
+
+                    // Проще: по выбранному пациенту найти его активный анамнез
+                    string findPatientQuery = @"
+                        SELECT a.Anamnesis_ID 
+                        FROM Anamnesis a
+                        JOIN Patient p ON a.Patient_ID = p.Patient_ID
+                        WHERE a.Ward_ID = @wardId 
+                          AND a.Date_of_discharge IS NULL
+                          AND (p.Surname || ' ' || p.Name || ' ' || COALESCE(p.Patronymic, '')) = @fio";
+
+                    using (var cmd = new NpgsqlCommand(findPatientQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@wardId", currentWardId);
+                        cmd.Parameters.AddWithValue("@fio", fio);
+                        var result = cmd.ExecuteScalar();
+
+                        if (result == null || result == DBNull.Value)
+                        {
+                            MessageBox.Show("Не найден активный анамнез для выбранного пациента");
+                            return;
+                        }
+
+                        int anamnesisId = Convert.ToInt32(result);
+
+                        // Обновляем дату выписки
+                        string updateQuery = "UPDATE Anamnesis SET Date_of_discharge = @today, Ward_ID = NULL WHERE Anamnesis_ID = @id";
+                        using (var updateCmd = new NpgsqlCommand(updateQuery, conn))
+                        {
+                            updateCmd.Parameters.AddWithValue("@today", DateTime.Now.Date);
+                            updateCmd.Parameters.AddWithValue("@id", anamnesisId);
+                            updateCmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                MessageBox.Show("Пациент выписан");
+                RefreshStatsAndPatients(); // Обновляем статистику и список пациентов
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при выписке: " + ex.Message);
+            }
         }
         private void RefreshStatsAndPatients()
         {

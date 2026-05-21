@@ -162,6 +162,8 @@ namespace HospitalApp.Forms
             if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvEmployees.Rows[e.RowIndex];
+            if (row.Cells["Employee_ID"].Value == null || row.Cells["Employee_ID"].Value == DBNull.Value)
+                return;
             currentEmployeeId = Convert.ToInt32(row.Cells["Employee_ID"].Value);
 
             txtSurname.Text = row.Cells["Фамилия"].Value.ToString();
@@ -196,7 +198,7 @@ namespace HospitalApp.Forms
                 rbSanitar.Checked = true;
                 LoadSanitarData();
             }
-
+            LoadSchedule();
             string departmentName = row.Cells["Отделение"].Value.ToString();
             for (int i = 0; i < cmbDepartment.Items.Count; i++)
             {
@@ -580,6 +582,7 @@ namespace HospitalApp.Forms
 
         private void ClearFields()
         {
+            dgvSchedule.DataSource = null;
             txtSurname.Text = "";
             txtName.Text = "";
             txtPatronymic.Text = "";
@@ -606,6 +609,183 @@ namespace HospitalApp.Forms
             chkAdmission.Checked = false;
 
             currentEmployeeId = 0;
+        }
+        private void LoadSchedule()
+        {
+            if (currentEmployeeId == 0)
+            {
+                dgvSchedule.DataSource = null;
+                return;
+            }
+
+            try
+            {
+                using (var conn = dbHelper.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT Schedule FROM Work_schedule WHERE Employee_ID = @empId";
+                    using (var cmd = new NpgsqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@empId", currentEmployeeId);
+                        var result = cmd.ExecuteScalar();
+
+                        var dt = new DataTable();
+                        dt.Columns.Add("Дата", typeof(DateTime));
+                        dt.Columns.Add("С", typeof(string));
+                        dt.Columns.Add("До", typeof(string));
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            var schedule = Newtonsoft.Json.Linq.JObject.Parse(result.ToString());
+                            foreach (var item in schedule)
+                            {
+                                if (DateTime.TryParse(item.Key, out DateTime date))
+                                {
+                                    string from = item.Value["from"]?.ToString() ?? "";
+                                    string to = item.Value["to"]?.ToString() ?? "";
+                                    dt.Rows.Add(date, from, to);
+                                }
+                            }
+                        }
+
+                        dgvSchedule.DataSource = dt;
+                        dgvSchedule.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка загрузки графика: " + ex.Message);
+            }
+        }
+        private void btnAddSchedule_Click(object sender, EventArgs e)
+        {
+            if (currentEmployeeId == 0)
+            {
+                MessageBox.Show("Выберите сотрудника из списка");
+                return;
+            }
+
+            string date = dtpScheduleDate.Value.ToString("yyyy-MM-dd");
+            string from = dtpScheduleFrom.Value.ToString("HH:mm");
+            string to = dtpScheduleTo.Value.ToString("HH:mm");
+
+            try
+            {
+                using (var conn = dbHelper.GetConnection())
+                {
+                    conn.Open();
+                    
+                    // Загружаем существующий график
+                    string selectQuery = "SELECT Schedule FROM Work_schedule WHERE Employee_ID = @empId";
+                    Newtonsoft.Json.Linq.JObject schedule;
+                    using (var cmd = new NpgsqlCommand(selectQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@empId", currentEmployeeId);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                            schedule = Newtonsoft.Json.Linq.JObject.Parse(result.ToString());
+                        else
+                            schedule = new Newtonsoft.Json.Linq.JObject();
+                    }
+
+                    schedule[date] = Newtonsoft.Json.Linq.JObject.FromObject(new { from, to });
+
+                    // Проверяем, существует ли запись для сотрудника
+                    string checkQuery = "SELECT COUNT(*) FROM Work_schedule WHERE Employee_ID = @empId";
+                    using (var cmd = new NpgsqlCommand(checkQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@empId", currentEmployeeId);
+                        long count = (long)cmd.ExecuteScalar();
+
+                        if (count == 0)
+                        {
+                            string insert = "INSERT INTO Work_schedule (Employee_ID, Schedule) VALUES (@empId, @schedule::jsonb)";
+                            using (var insertCmd = new NpgsqlCommand(insert, conn))
+                            {
+                                insertCmd.Parameters.AddWithValue("@empId", currentEmployeeId);
+                                insertCmd.Parameters.AddWithValue("@schedule", schedule.ToString());
+                                insertCmd.ExecuteNonQuery();
+                            }
+                        }
+                        else
+                        {
+                            string update = "UPDATE Work_schedule SET Schedule = @schedule::jsonb WHERE Employee_ID = @empId";
+                            using (var updateCmd = new NpgsqlCommand(update, conn))
+                            {
+                                updateCmd.Parameters.AddWithValue("@schedule", schedule.ToString());
+                                updateCmd.Parameters.AddWithValue("@empId", currentEmployeeId);
+                                updateCmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                LoadSchedule();
+                MessageBox.Show("График обновлён");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: " + ex.Message);
+            }
+        }
+        private void btnDeleteSchedule_Click(object sender, EventArgs e)
+        {
+            if (currentEmployeeId == 0)
+            {
+                MessageBox.Show("Выберите сотрудника из списка");
+                return;
+            }
+
+            string date = dtpScheduleDate.Value.ToString("yyyy-MM-dd");
+
+            try
+            {
+                using (var conn = dbHelper.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT Schedule FROM Work_schedule WHERE Employee_ID = @empId";
+                    Newtonsoft.Json.Linq.JObject schedule;
+                    using (var cmd = new NpgsqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@empId", currentEmployeeId);
+                        var result = cmd.ExecuteScalar();
+                        if (result == null || result == DBNull.Value)
+                        {
+                            MessageBox.Show("График не найден");
+                            return;
+                        }
+                        schedule = Newtonsoft.Json.Linq.JObject.Parse(result.ToString());
+                    }
+
+                    schedule.Remove(date);
+
+                    string update = "UPDATE Work_schedule SET Schedule = @schedule::jsonb WHERE Employee_ID = @empId";
+                    using (var cmd = new NpgsqlCommand(update, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@schedule", schedule.ToString());
+                        cmd.Parameters.AddWithValue("@empId", currentEmployeeId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                LoadSchedule();
+                MessageBox.Show("Запись удалена");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: " + ex.Message);
+            }
+        }
+        private void dgvSchedule_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            DataGridViewRow row = dgvSchedule.Rows[e.RowIndex];
+            if (row.Cells["Дата"].Value == null || row.Cells["Дата"].Value == DBNull.Value)
+                return;
+            dtpScheduleDate.Value = Convert.ToDateTime(row.Cells["Дата"].Value);
+            dtpScheduleFrom.Value = DateTime.Parse(row.Cells["С"].Value.ToString());
+            dtpScheduleTo.Value = DateTime.Parse(row.Cells["До"].Value.ToString());
         }
     }
 }
