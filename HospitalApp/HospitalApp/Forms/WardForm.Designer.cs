@@ -43,8 +43,6 @@ partial class WardForm
         btnAdd = new System.Windows.Forms.Button();
         btnUpdate = new System.Windows.Forms.Button();
         btnDelete = new System.Windows.Forms.Button();
-        lblStats = new System.Windows.Forms.Label();
-        btnRefreshStats = new System.Windows.Forms.Button();
         dgvPatientsInWard = new System.Windows.Forms.DataGridView();
         lblAnamnesisId = new System.Windows.Forms.Label();
         txtAnamnesisId = new System.Windows.Forms.TextBox();
@@ -57,7 +55,7 @@ partial class WardForm
         // dgvWards
         // 
         dgvWards.ColumnHeadersHeight = 29;
-        dgvWards.Location = new System.Drawing.Point(607, 35);
+        dgvWards.Location = new System.Drawing.Point(12, 12);
         dgvWards.Name = "dgvWards";
         dgvWards.RowHeadersWidth = 51;
         dgvWards.Size = new System.Drawing.Size(589, 150);
@@ -66,7 +64,7 @@ partial class WardForm
         // 
         // lblWardNumber
         // 
-        lblWardNumber.Location = new System.Drawing.Point(12, 188);
+        lblWardNumber.Location = new System.Drawing.Point(12, 321);
         lblWardNumber.Name = "lblWardNumber";
         lblWardNumber.Size = new System.Drawing.Size(114, 23);
         lblWardNumber.TabIndex = 1;
@@ -74,7 +72,7 @@ partial class WardForm
         // 
         // lblBedCount
         // 
-        lblBedCount.Location = new System.Drawing.Point(12, 221);
+        lblBedCount.Location = new System.Drawing.Point(12, 354);
         lblBedCount.Name = "lblBedCount";
         lblBedCount.Size = new System.Drawing.Size(126, 23);
         lblBedCount.TabIndex = 2;
@@ -82,7 +80,7 @@ partial class WardForm
         // 
         // lblVipStatus
         // 
-        lblVipStatus.Location = new System.Drawing.Point(12, 254);
+        lblVipStatus.Location = new System.Drawing.Point(12, 387);
         lblVipStatus.Name = "lblVipStatus";
         lblVipStatus.Size = new System.Drawing.Size(100, 23);
         lblVipStatus.TabIndex = 3;
@@ -90,7 +88,7 @@ partial class WardForm
         // 
         // lblIsolationStatus
         // 
-        lblIsolationStatus.Location = new System.Drawing.Point(12, 287);
+        lblIsolationStatus.Location = new System.Drawing.Point(12, 420);
         lblIsolationStatus.Name = "lblIsolationStatus";
         lblIsolationStatus.Size = new System.Drawing.Size(144, 23);
         lblIsolationStatus.TabIndex = 4;
@@ -98,14 +96,14 @@ partial class WardForm
         // 
         // txtWardNumber
         // 
-        txtWardNumber.Location = new System.Drawing.Point(162, 187);
+        txtWardNumber.Location = new System.Drawing.Point(162, 320);
         txtWardNumber.Name = "txtWardNumber";
         txtWardNumber.Size = new System.Drawing.Size(121, 27);
         txtWardNumber.TabIndex = 5;
         // 
         // txtBedCount
         // 
-        txtBedCount.Location = new System.Drawing.Point(162, 220);
+        txtBedCount.Location = new System.Drawing.Point(162, 353);
         txtBedCount.Name = "txtBedCount";
         txtBedCount.Size = new System.Drawing.Size(121, 27);
         txtBedCount.TabIndex = 6;
@@ -114,21 +112,21 @@ partial class WardForm
         // 
         cmbVipStatus.FormattingEnabled = true;
         cmbVipStatus.Items.AddRange(new object[] { "VIP", "Обычная" });
-        cmbVipStatus.Location = new System.Drawing.Point(162, 253);
+        cmbVipStatus.Location = new System.Drawing.Point(162, 386);
         cmbVipStatus.Name = "cmbVipStatus";
         cmbVipStatus.Size = new System.Drawing.Size(121, 28);
         cmbVipStatus.TabIndex = 7;
         // 
         // txtIsolationStatus
         // 
-        txtIsolationStatus.Location = new System.Drawing.Point(162, 287);
+        txtIsolationStatus.Location = new System.Drawing.Point(162, 420);
         txtIsolationStatus.Name = "txtIsolationStatus";
         txtIsolationStatus.Size = new System.Drawing.Size(121, 27);
         txtIsolationStatus.TabIndex = 8;
         // 
         // btnAdd
         // 
-        btnAdd.Location = new System.Drawing.Point(12, 335);
+        btnAdd.Location = new System.Drawing.Point(12, 468);
         btnAdd.Name = "btnAdd";
         btnAdd.Size = new System.Drawing.Size(85, 28);
         btnAdd.TabIndex = 9;
@@ -138,7 +136,7 @@ partial class WardForm
         // 
         // btnUpdate
         // 
-        btnUpdate.Location = new System.Drawing.Point(103, 335);
+        btnUpdate.Location = new System.Drawing.Point(103, 468);
         btnUpdate.Name = "btnUpdate";
         btnUpdate.Size = new System.Drawing.Size(93, 28);
         btnUpdate.TabIndex = 10;
@@ -148,7 +146,7 @@ partial class WardForm
         // 
         // btnDelete
         // 
-        btnDelete.Location = new System.Drawing.Point(202, 335);
+        btnDelete.Location = new System.Drawing.Point(202, 468);
         btnDelete.Name = "btnDelete";
         btnDelete.Size = new System.Drawing.Size(81, 28);
         btnDelete.TabIndex = 11;
@@ -156,27 +154,10 @@ partial class WardForm
         btnDelete.UseVisualStyleBackColor = true;
         btnDelete.Click += btnDelete_Click;
         // 
-        // lblStats
-        // 
-        lblStats.Location = new System.Drawing.Point(12, 9);
-        lblStats.Name = "lblStats";
-        lblStats.Size = new System.Drawing.Size(100, 23);
-        lblStats.TabIndex = 12;
-        lblStats.Text = "Статистика";
-        // 
-        // btnRefreshStats
-        // 
-        btnRefreshStats.Location = new System.Drawing.Point(103, 9);
-        btnRefreshStats.Name = "btnRefreshStats";
-        btnRefreshStats.Size = new System.Drawing.Size(180, 28);
-        btnRefreshStats.TabIndex = 13;
-        btnRefreshStats.Text = "Обновить статистику";
-        btnRefreshStats.UseVisualStyleBackColor = true;
-        // 
         // dgvPatientsInWard
         // 
         dgvPatientsInWard.ColumnHeadersHeight = 29;
-        dgvPatientsInWard.Location = new System.Drawing.Point(12, 35);
+        dgvPatientsInWard.Location = new System.Drawing.Point(12, 168);
         dgvPatientsInWard.Name = "dgvPatientsInWard";
         dgvPatientsInWard.RowHeadersWidth = 51;
         dgvPatientsInWard.Size = new System.Drawing.Size(589, 150);
@@ -184,7 +165,7 @@ partial class WardForm
         // 
         // lblAnamnesisId
         // 
-        lblAnamnesisId.Location = new System.Drawing.Point(12, 411);
+        lblAnamnesisId.Location = new System.Drawing.Point(12, 544);
         lblAnamnesisId.Name = "lblAnamnesisId";
         lblAnamnesisId.Size = new System.Drawing.Size(184, 27);
         lblAnamnesisId.TabIndex = 15;
@@ -192,14 +173,14 @@ partial class WardForm
         // 
         // txtAnamnesisId
         // 
-        txtAnamnesisId.Location = new System.Drawing.Point(202, 411);
+        txtAnamnesisId.Location = new System.Drawing.Point(202, 544);
         txtAnamnesisId.Name = "txtAnamnesisId";
         txtAnamnesisId.Size = new System.Drawing.Size(168, 27);
         txtAnamnesisId.TabIndex = 16;
         // 
         // btnAddAnamnesis
         // 
-        btnAddAnamnesis.Location = new System.Drawing.Point(380, 411);
+        btnAddAnamnesis.Location = new System.Drawing.Point(380, 544);
         btnAddAnamnesis.Name = "btnAddAnamnesis";
         btnAddAnamnesis.Size = new System.Drawing.Size(150, 27);
         btnAddAnamnesis.TabIndex = 17;
@@ -208,7 +189,7 @@ partial class WardForm
         // 
         // btnDischarge
         // 
-        btnDischarge.Location = new System.Drawing.Point(550, 411);
+        btnDischarge.Location = new System.Drawing.Point(550, 544);
         btnDischarge.Name = "btnDischarge";
         btnDischarge.Size = new System.Drawing.Size(150, 27);
         btnDischarge.TabIndex = 0;
@@ -222,8 +203,6 @@ partial class WardForm
         ClientSize = new System.Drawing.Size(1920, 1055);
         Controls.Add(btnDischarge);
         Controls.Add(dgvPatientsInWard);
-        Controls.Add(btnRefreshStats);
-        Controls.Add(lblStats);
         Controls.Add(btnDelete);
         Controls.Add(btnUpdate);
         Controls.Add(btnAdd);
@@ -247,9 +226,7 @@ partial class WardForm
     }
 
     private System.Windows.Forms.DataGridView dgvPatientsInWard;
-    private System.Windows.Forms.Label lblStats;
-    private Button btnRefreshStats;
-        
+
     private System.Windows.Forms.Button btnAddAnamnesis;
     //private System.Windows.Forms.Button btnRefreshStats;
     

@@ -405,7 +405,7 @@ namespace HospitalApp.Forms
                                 int occupied = reader["Occupied"] != DBNull.Value ? Convert.ToInt32(reader["Occupied"]) : 0;
                                 int total = reader["Total"] != DBNull.Value ? Convert.ToInt32(reader["Total"]) : 0;
                                 int free = total - occupied;
-                                lblStats.Text = $"Статистика: занято {occupied} из {total}. Свободно: {free}";
+                                //lblStats.Text = $"Статистика: занято {occupied} из {total}. Свободно: {free}";
                             }
                         }
                     }

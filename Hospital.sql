@@ -151,9 +151,7 @@ CREATE TABLE IF NOT EXISTS Anamnesis (
 	FOREIGN KEY (Attending_doctor_ID) REFERENCES Doctor(Employee_ID) ON DELETE CASCADE,
 	FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID) ON DELETE CASCADE
 );
--- =====================================================
--- 1. Отделения (5-10)
--- =====================================================
+
 INSERT INTO Department (Floor_number, Inner_phone, Department_name) VALUES
 (1, '+7-901-100-11-11', 'Кардиологическое отделение'),
 (2, '+7-901-100-22-22', 'Неврологическое отделение'),
@@ -167,9 +165,6 @@ INSERT INTO Department (Floor_number, Inner_phone, Department_name) VALUES
 (2, '+7-901-200-00-00', 'Отоларингологическое отделение'),
 (3, '+7-901-200-11-11', 'Реанимационное отделение');
 
--- =====================================================
--- 2. Палаты (по 3-5 палат на отделение)
--- =====================================================
 DO $$
 DECLARE
     dept RECORD;
@@ -199,9 +194,6 @@ BEGIN
     END LOOP;
 END $$;
 
--- =====================================================
--- 3. Сотрудники (300+)
--- =====================================================
 DO $$
 DECLARE
     i INT;
@@ -216,7 +208,6 @@ DECLARE
     pos INT;
     emp_id INT;
 BEGIN
-    -- Доктора (60 человек)
     FOR i IN 1..60 LOOP
         is_male := random() > 0.4;
         gender_bit := CASE WHEN is_male THEN B'1' ELSE B'0' END;
@@ -260,8 +251,7 @@ BEGIN
             END
         );
     END LOOP;
-    
-    -- Медсёстры (100 человек)
+
     FOR i IN 1..100 LOOP
         is_male := random() > 0.85;
         gender_bit := CASE WHEN is_male THEN B'1' ELSE B'0' END;
@@ -292,8 +282,6 @@ BEGIN
             END
         );
     END LOOP;
-    
-    -- Санитары (50 человек)
     FOR i IN 1..50 LOOP
         is_male := random() > 0.5;
         gender_bit := CASE WHEN is_male THEN B'1' ELSE B'0' END;
@@ -316,9 +304,6 @@ BEGIN
         VALUES (emp_id, 3, CASE WHEN random() > 0.1 THEN B'1' ELSE B'0' END);
     END LOOP;
 END $$;
--- =====================================================
--- 4. Пациенты (50000)
--- =====================================================
 DO $$
 DECLARE
     i INT;
@@ -357,9 +342,7 @@ BEGIN
         );
     END LOOP;
 END $$;
--- =====================================================
--- 5. Анамнезы (исправленная версия)
--- =====================================================
+
 DO $$
 DECLARE
     patient RECORD;
@@ -386,9 +369,7 @@ BEGIN
         anamnesis_count := 1 + (random() * 2)::INT;
         
         FOR i IN 1..anamnesis_count LOOP
-            -- Только для открытых анамнезов нужна свободная палата
             IF i = anamnesis_count AND random() > 0.3 THEN
-                -- Открытая госпитализация: ищем палату со свободными местами
                 SELECT array_agg(Ward_ID) INTO available_wards
                 FROM (
                     SELECT w.Ward_ID
@@ -408,7 +389,6 @@ BEGIN
                 arrive_date := last_arrive_date + (random() * 30)::INT;
                 discharge_date := NULL;
             ELSE
-                -- Закрытая госпитализация: палата не важна
                 SELECT Ward_ID INTO v_ward_id FROM Ward ORDER BY random() LIMIT 1;
                 arrive_date := last_arrive_date + (random() * 60)::INT;
                 discharge_date := arrive_date + (random() * 30)::INT + 1;
@@ -480,9 +460,6 @@ BEGIN
         END LOOP;
     END LOOP;
 END $$;
--- =====================================================
--- 6. Проверка количества
--- =====================================================
 
 SELECT 'Department' AS table_name, COUNT(*) FROM Department
 UNION ALL SELECT 'Employee', COUNT(*) FROM Employee
